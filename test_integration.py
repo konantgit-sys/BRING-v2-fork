@@ -32,7 +32,7 @@ except Exception as e:
     all_ok = False
 
 try:
-    from world_explorer.api import app as api_app
+    from world_explorer.api import app as cli_app
     print("   ✓ API module")
 except Exception as e:
     print(f"   ✗ API: {e}")
@@ -48,7 +48,7 @@ except Exception as e:
 # 2. Check API routes
 print("\n[2] Checking API routes...")
 routes = []
-for route in api_app.routes:
+for route in cli_app.routes:
     if hasattr(route, 'path') and hasattr(route, 'methods'):
         for method in getattr(route, 'methods', set()):
             routes.append(f"{method} {route.path}")
@@ -65,7 +65,7 @@ required_routes = [
 # Check for WebSocket routes
 # Check for WebSocket routes - they have empty methods sets
 ws_found = False
-for route in api_app.routes:
+for route in cli_app.routes:
     if hasattr(route, 'path') and '/ws/' in route.path:
         ws_found = True
         print(f"   ✓ {route.path} (WebSocket)")
