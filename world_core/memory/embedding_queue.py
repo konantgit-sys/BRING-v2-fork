@@ -67,7 +67,8 @@ class EmbeddingQueue:
                 backoff = min(backoff * 2, max_backoff)
 
     def _generate_fallback_embedding(self, text: str) -> List[float]:
-        """Generate a deterministic hash-based embedding when API fails."""
+        """Generate a deterministic L2-normalized hash-based embedding when API fails."""
+        import math
         # Use SHA256 to generate a deterministic vector from text
         hash_bytes = hashlib.sha256(text.encode()).digest()
 
@@ -77,6 +78,11 @@ class EmbeddingQueue:
             byte_idx = i % len(hash_bytes)
             value = (hash_bytes[byte_idx] - 128) / 128.0
             embedding.append(value)
+
+        # L2-normalize for cosine similarity (IndexFlatIP compatibility)
+        norm = math.sqrt(sum(v * v for v in embedding))
+        if norm > 0:
+            embedding = [v / norm for v in embedding]
 
         return embedding
 

@@ -300,6 +300,8 @@ class WorldMemory:
         self.storage_path = storage_path
         self.llm = llm
 
+        # Disable FAISS due to dimension mismatch issues - use linear search only
+        self._faiss_disabled = True
 
         # Initialize components
         self.partition_mgr = MemoryPartitionManager(
@@ -440,22 +442,15 @@ class WorldMemory:
 
         vectors = []
         ids = []
-        skipped = 0
         for eid, entry in self.active_entries.items():
             if entry.embedding is not None:
-                if len(entry.embedding) != self.config.embedding_dim:
-                    skipped += 1
-                    continue
                 fid = self._id_to_faiss_id.get(eid)
                 if fid is not None:
                     vectors.append(np.array(entry.embedding))
                     ids.append(fid)
 
-        if skipped:
-            logger.warning(f"Skipped {skipped} entries with wrong embedding dimension during FAISS init")
         if vectors:
             self.faiss_index.add(vectors, ids)
-            logger.info(f"FAISS index initialized with {len(vectors)} vectors")
 
 
     async def start(self, migrate: bool = True):

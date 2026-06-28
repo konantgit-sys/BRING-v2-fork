@@ -1,0 +1,12 @@
+{
+  "session": "tg_6448014963",
+  "project": "BRING-v2-fork",
+  "phase": 0,
+  "commits": [
+    "4c589d1",
+    "f7bb47a"
+  ],
+  "status": "Diagnostics complete",
+  "next": "Phase 1: FAISS fix + normalize embeddings",
+  "timestamp": "2026-06-28T20:11:31.616484+00:00"
+}
