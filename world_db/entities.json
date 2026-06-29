@@ -1,0 +1,687 @@
+[
+  {
+    "uid": "Race:Humans",
+    "name": "Humans",
+    "entity_type": "Race",
+    "profile": {
+      "l1": {
+        "name": "Humans",
+        "type": "Race",
+        "summary": "Dominant race of the Seven Kingdoms. Short-lived but adaptable. Produce the most Weavers.",
+        "tags": [
+          "adaptable",
+          "ambitious",
+          "short-lived"
+        ]
+      },
+      "l2": {
+        "description": "Dominant race of the Seven Kingdoms. Short-lived but adaptable. Produce the most Weavers."
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Race:Aetherkin",
+    "name": "Aetherkin",
+    "entity_type": "Race",
+    "profile": {
+      "l1": {
+        "name": "Aetherkin",
+        "type": "Race",
+        "summary": "Tall, pale beings born with natural Void Resonance. Their skin shimmers with trapped starlight. Hunted by the Inquisition.",
+        "tags": [
+          "void-touched",
+          "long-lived",
+          "nocturnal"
+        ]
+      },
+      "l2": {
+        "description": "Tall, pale beings born with natural Void Resonance. Their skin shimmers with trapped starlight. Hunted by the Inquisition."
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Race:Stoneforged",
+    "name": "Stoneforged",
+    "entity_type": "Race",
+    "profile": {
+      "l1": {
+        "name": "Stoneforged",
+        "type": "Race",
+        "summary": "Sentient constructs of living crystal and ore. Do not sleep, eat, or age. Created by the First Weavers as guardians.",
+        "tags": [
+          "immortal",
+          "logical",
+          "heavy"
+        ]
+      },
+      "l2": {
+        "description": "Sentient constructs of living crystal and ore. Do not sleep, eat, or age. Created by the First Weavers as guardians."
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Race:Thornfolk",
+    "name": "Thornfolk",
+    "entity_type": "Race",
+    "profile": {
+      "l1": {
+        "name": "Thornfolk",
+        "type": "Race",
+        "summary": "Small plant-humanoids from the Verdant Depths. Photosynthetic. Speak through rustling leaves and pheromones.",
+        "tags": [
+          "photosynthetic",
+          "empathic",
+          "small"
+        ]
+      },
+      "l2": {
+        "description": "Small plant-humanoids from the Verdant Depths. Photosynthetic. Speak through rustling leaves and pheromones."
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Faction:The Weavers' Conclave",
+    "name": "The Weavers' Conclave",
+    "entity_type": "Faction",
+    "profile": {
+      "l1": {
+        "name": "The Weavers' Conclave",
+        "type": "Faction",
+        "summary": "Governing body of sanctioned magic. Train and license all non-Void Weavers. Answer to the Seven Crowns."
+      },
+      "l2": {
+        "description": "Governing body of sanctioned magic. Train and license all non-Void Weavers. Answer to the Seven Crowns.",
+        "alignment": "lawful neutral"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Faction:The Void Ascendancy",
+    "name": "The Void Ascendancy",
+    "entity_type": "Faction",
+    "profile": {
+      "l1": {
+        "name": "The Void Ascendancy",
+        "type": "Faction",
+        "summary": "Secret society of Void Weavers. Believe the Sky Shattering was liberation, not catastrophe. Seek to widen the cracks."
+      },
+      "l2": {
+        "description": "Secret society of Void Weavers. Believe the Sky Shattering was liberation, not catastrophe. Seek to widen the cracks.",
+        "alignment": "chaotic neutral"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Faction:The Inquisition of Pure Light",
+    "name": "The Inquisition of Pure Light",
+    "entity_type": "Faction",
+    "profile": {
+      "l1": {
+        "name": "The Inquisition of Pure Light",
+        "type": "Faction",
+        "summary": "Religious order that hunts Void-touched beings and Void Weavers. Fanatical. Burn first, ask never."
+      },
+      "l2": {
+        "description": "Religious order that hunts Void-touched beings and Void Weavers. Fanatical. Burn first, ask never.",
+        "alignment": "lawful evil"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Faction:The Gearmonger Consortium",
+    "name": "The Gearmonger Consortium",
+    "entity_type": "Faction",
+    "profile": {
+      "l1": {
+        "name": "The Gearmonger Consortium",
+        "type": "Faction",
+        "summary": "Guild of artificers and Stoneforged. Build Resonance-powered machines. Control trade routes between kingdoms."
+      },
+      "l2": {
+        "description": "Guild of artificers and Stoneforged. Build Resonance-powered machines. Control trade routes between kingdoms.",
+        "alignment": "true neutral"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Faction:The Thornwardens",
+    "name": "The Thornwardens",
+    "entity_type": "Faction",
+    "profile": {
+      "l1": {
+        "name": "The Thornwardens",
+        "type": "Faction",
+        "summary": "Thornfolk guardians of the Verdant Depths. Protect ancient forests from industrial expansion. Masters of biomancy."
+      },
+      "l2": {
+        "description": "Thornfolk guardians of the Verdant Depths. Protect ancient forests from industrial expansion. Masters of biomancy.",
+        "alignment": "neutral good"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Character:Kaelen Ashvale",
+    "name": "Kaelen Ashvale",
+    "entity_type": "Character",
+    "profile": {
+      "l1": {
+        "name": "Kaelen Ashvale",
+        "type": "Character",
+        "summary": "Young Weaver who accidentally attuned to Void Resonance. On the run from the Inquisition. Carries his mother's Resonance blade — it hums only for him.",
+        "tags": [
+          "fearless",
+          "reckless",
+          "loyal"
+        ]
+      },
+      "l2": {
+        "description": "Young Weaver who accidentally attuned to Void Resonance. On the run from the Inquisition. Carries his mother's Resonance blade — it hums only for him.",
+        "role": "Protagonist",
+        "race": "Human",
+        "resonance": "Void/Twin"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Character:Elara Moonshard",
+    "name": "Elara Moonshard",
+    "entity_type": "Character",
+    "profile": {
+      "l1": {
+        "name": "Elara Moonshard",
+        "type": "Character",
+        "summary": "Last daughter of a purged Aetherkin noble house. Found refuge in the Verdant Depths. Knows secrets about why the Sky Shattered.",
+        "tags": [
+          "mysterious",
+          "gentle",
+          "traumatized"
+        ]
+      },
+      "l2": {
+        "description": "Last daughter of a purged Aetherkin noble house. Found refuge in the Verdant Depths. Knows secrets about why the Sky Shattered.",
+        "role": "Companion",
+        "race": "Aetherkin",
+        "resonance": "Void"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Character:Inquisitor-General Valdris Korr",
+    "name": "Inquisitor-General Valdris Korr",
+    "entity_type": "Character",
+    "profile": {
+      "l1": {
+        "name": "Inquisitor-General Valdris Korr",
+        "type": "Character",
+        "summary": "Head of the Inquisition. Implacable. His family was killed by a Void Weaver during the Cataclysm of Thornfall. His hatred is absolute — but so is his code of honor.",
+        "tags": [
+          "ruthless",
+          "honorable",
+          "haunted"
+        ]
+      },
+      "l2": {
+        "description": "Head of the Inquisition. Implacable. His family was killed by a Void Weaver during the Cataclysm of Thornfall. His hatred is absolute — but so is his code of honor.",
+        "role": "Antagonist",
+        "race": "Human",
+        "resonance": "Flame"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Character:Gearmaster Thunk-7",
+    "name": "Gearmaster Thunk-7",
+    "entity_type": "Character",
+    "profile": {
+      "l1": {
+        "name": "Gearmaster Thunk-7",
+        "type": "Character",
+        "summary": "7th iteration of a Stoneforged artificer. Builds impossible machines. Speaks in binary and poetry. Remembers the world before the Shattering.",
+        "tags": [
+          "ancient",
+          "eccentric",
+          "kind"
+        ]
+      },
+      "l2": {
+        "description": "7th iteration of a Stoneforged artificer. Builds impossible machines. Speaks in binary and poetry. Remembers the world before the Shattering.",
+        "role": "Ally",
+        "race": "Stoneforged"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Character:Sylva Thornheart",
+    "name": "Sylva Thornheart",
+    "entity_type": "Character",
+    "profile": {
+      "l1": {
+        "name": "Sylva Thornheart",
+        "type": "Character",
+        "summary": "Thornwarden leader. Communicates through vines and flowers. Fierce protector of the forest. Has an unusual fondness for Kaelen.",
+        "tags": [
+          "fierce",
+          "nurturing",
+          "suspicious-of-fire"
+        ]
+      },
+      "l2": {
+        "description": "Thornwarden leader. Communicates through vines and flowers. Fierce protector of the forest. Has an unusual fondness for Kaelen.",
+        "role": "Ally",
+        "race": "Thornfolk"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Location:The Seven Kingdoms",
+    "name": "The Seven Kingdoms",
+    "entity_type": "Location",
+    "profile": {
+      "l1": {
+        "name": "The Seven Kingdoms",
+        "type": "Location",
+        "summary": "Fractured continent of human realms, united only by fear of the Void. Each kingdom has a Resonance specialty."
+      },
+      "l2": {
+        "description": "Fractured continent of human realms, united only by fear of the Void. Each kingdom has a Resonance specialty.",
+        "location_type": "continent"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Location:Verdant Depths",
+    "name": "Verdant Depths",
+    "entity_type": "Location",
+    "profile": {
+      "l1": {
+        "name": "Verdant Depths",
+        "type": "Location",
+        "summary": "Ancient forest where Thornfolk dwell. Trees so tall their canopies form a second ground level. Thornwarden territory."
+      },
+      "l2": {
+        "description": "Ancient forest where Thornfolk dwell. Trees so tall their canopies form a second ground level. Thornwarden territory.",
+        "location_type": "forest"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Location:The Sky-Cracks",
+    "name": "The Sky-Cracks",
+    "entity_type": "Location",
+    "profile": {
+      "l1": {
+        "name": "The Sky-Cracks",
+        "type": "Location",
+        "summary": "Visible rifts in the sky where Void energy seeps through. Northern lights made of raw magic. Airships avoid them."
+      },
+      "l2": {
+        "description": "Visible rifts in the sky where Void energy seeps through. Northern lights made of raw magic. Airships avoid them.",
+        "location_type": "phenomenon"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Location:Ironhold Citadel",
+    "name": "Ironhold Citadel",
+    "entity_type": "Location",
+    "profile": {
+      "l1": {
+        "name": "Ironhold Citadel",
+        "type": "Location",
+        "summary": "Inquisition stronghold. Black iron spires. Prison for captured Void Weavers. Cells are lined with Nullstone — magic doesn't work inside."
+      },
+      "l2": {
+        "description": "Inquisition stronghold. Black iron spires. Prison for captured Void Weavers. Cells are lined with Nullstone — magic doesn't work inside.",
+        "location_type": "fortress"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Location:The Resonant Spire",
+    "name": "The Resonant Spire",
+    "entity_type": "Location",
+    "profile": {
+      "l1": {
+        "name": "The Resonant Spire",
+        "type": "Location",
+        "summary": "Conclave headquarters. A tower that amplifies Resonance — Weavers train here to master their craft. The top floor touches a Sky-Crack."
+      },
+      "l2": {
+        "description": "Conclave headquarters. A tower that amplifies Resonance — Weavers train here to master their craft. The top floor touches a Sky-Crack.",
+        "location_type": "tower"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Location:Cogmarket",
+    "name": "Cogmarket",
+    "entity_type": "Location",
+    "profile": {
+      "l1": {
+        "name": "Cogmarket",
+        "type": "Location",
+        "summary": "Underground bazaar beneath the neutral city of Brassgate. Gearmonger territory. Anything can be bought here — including Void artifacts."
+      },
+      "l2": {
+        "description": "Underground bazaar beneath the neutral city of Brassgate. Gearmonger territory. Anything can be bought here — including Void artifacts.",
+        "location_type": "city"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Item:Mother's Resonance Blade",
+    "name": "Mother's Resonance Blade",
+    "entity_type": "Item",
+    "profile": {
+      "l1": {
+        "name": "Mother's Resonance Blade",
+        "type": "Item",
+        "summary": "A sword that vibrates with trapped sound. When swung, it screams. Kaelen's inheritance. Attuned to his unique Twin Resonance."
+      },
+      "l2": {
+        "description": "A sword that vibrates with trapped sound. When swung, it screams. Kaelen's inheritance. Attuned to his unique Twin Resonance.",
+        "location_type": "weapon"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Item:Nullstone Shackles",
+    "name": "Nullstone Shackles",
+    "entity_type": "Item",
+    "profile": {
+      "l1": {
+        "name": "Nullstone Shackles",
+        "type": "Item",
+        "summary": "Handcuffs carved from anti-magic stone. Used by the Inquisition to transport captured Weavers."
+      },
+      "l2": {
+        "description": "Handcuffs carved from anti-magic stone. Used by the Inquisition to transport captured Weavers.",
+        "location_type": "tool"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Item:Sky-Shard",
+    "name": "Sky-Shard",
+    "entity_type": "Item",
+    "profile": {
+      "l1": {
+        "name": "Sky-Shard",
+        "type": "Item",
+        "summary": "Fragment of the original moon. Pulses with Void energy. Highly illegal. Sought by the Void Ascendancy."
+      },
+      "l2": {
+        "description": "Fragment of the original moon. Pulses with Void energy. Highly illegal. Sought by the Void Ascendancy.",
+        "location_type": "artifact"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Item:Gearmonger Pocket Engine",
+    "name": "Gearmonger Pocket Engine",
+    "entity_type": "Item",
+    "profile": {
+      "l1": {
+        "name": "Gearmonger Pocket Engine",
+        "type": "Item",
+        "summary": "Thunk-7's masterpiece. A miniature perpetual motion machine powered by Resonance harmonics. Fits in a palm."
+      },
+      "l2": {
+        "description": "Thunk-7's masterpiece. A miniature perpetual motion machine powered by Resonance harmonics. Fits in a palm.",
+        "location_type": "device"
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Event:The Sky Shattering",
+    "name": "The Sky Shattering",
+    "entity_type": "Event",
+    "profile": {
+      "l1": {
+        "name": "The Sky Shattering",
+        "type": "Event",
+        "summary": "The original moon exploded. No one knows why. The cracks released Void energy into the world, creating the first Weavers and the first Void-touched."
+      },
+      "l2": {
+        "description": "The original moon exploded. No one knows why. The cracks released Void energy into the world, creating the first Weavers and the first Void-touched.",
+        "year": 0
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Event:The Cataclysm of Thornfall",
+    "name": "The Cataclysm of Thornfall",
+    "entity_type": "Event",
+    "profile": {
+      "l1": {
+        "name": "The Cataclysm of Thornfall",
+        "type": "Event",
+        "summary": "A Void Weaver destroyed the town of Thornfall, killing 3000 including Inquisitor-General Korr's family. This event sparked the Great Purge."
+      },
+      "l2": {
+        "description": "A Void Weaver destroyed the town of Thornfall, killing 3000 including Inquisitor-General Korr's family. This event sparked the Great Purge.",
+        "year": 832
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Event:The Great Purge",
+    "name": "The Great Purge",
+    "entity_type": "Event",
+    "profile": {
+      "l1": {
+        "name": "The Great Purge",
+        "type": "Event",
+        "summary": "Inquisition systematically hunted and executed Aetherkin across all Seven Kingdoms. 80% of Aetherkin population killed. Survivors went into hiding."
+      },
+      "l2": {
+        "description": "Inquisition systematically hunted and executed Aetherkin across all Seven Kingdoms. 80% of Aetherkin population killed. Survivors went into hiding.",
+        "year": 833
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "Event:The Verdant Concord",
+    "name": "The Verdant Concord",
+    "entity_type": "Event",
+    "profile": {
+      "l1": {
+        "name": "The Verdant Concord",
+        "type": "Event",
+        "summary": "Thornfolk and Stoneforged formed an alliance to protect the Verdant Depths from industrialization. First cross-species treaty in 400 years."
+      },
+      "l2": {
+        "description": "Thornfolk and Stoneforged formed an alliance to protect the Verdant Depths from industrialization. First cross-species treaty in 400 years.",
+        "year": 840
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "WorldRule:Resonance Binding",
+    "name": "Resonance Binding",
+    "entity_type": "WorldRule",
+    "profile": {
+      "l1": {
+        "name": "Resonance Binding",
+        "type": "WorldRule",
+        "summary": "Every Weaver is born with or develops one Resonance. Dual Resonance is possible but dangerous — causes mental instability. Void Resonance is illegal."
+      },
+      "l2": {
+        "description": "Every Weaver is born with or develops one Resonance. Dual Resonance is possible but dangerous — causes mental instability. Void Resonance is illegal."
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "WorldRule:The Toll of Magic",
+    "name": "The Toll of Magic",
+    "entity_type": "WorldRule",
+    "profile": {
+      "l1": {
+        "name": "The Toll of Magic",
+        "type": "WorldRule",
+        "summary": "Casting drains body heat. Overcasting causes frostburn, hypothermia, and death. Master Weavers learn to regulate their temperature through breathing techniques."
+      },
+      "l2": {
+        "description": "Casting drains body heat. Overcasting causes frostburn, hypothermia, and death. Master Weavers learn to regulate their temperature through breathing techniques."
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "WorldRule:Nullstone",
+    "name": "Nullstone",
+    "entity_type": "WorldRule",
+    "profile": {
+      "l1": {
+        "name": "Nullstone",
+        "type": "WorldRule",
+        "summary": "Anti-magic mineral. Suppresses all Resonance within a radius. Mined exclusively by the Inquisition. Used in prisons, shackles, and execution chambers."
+      },
+      "l2": {
+        "description": "Anti-magic mineral. Suppresses all Resonance within a radius. Mined exclusively by the Inquisition. Used in prisons, shackles, and execution chambers."
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  },
+  {
+    "uid": "WorldRule:Soul Fragments",
+    "name": "Soul Fragments",
+    "entity_type": "WorldRule",
+    "profile": {
+      "l1": {
+        "name": "Soul Fragments",
+        "type": "WorldRule",
+        "summary": "When a Weaver dies, part of their consciousness lingers in any artifact they created. These fragments can communicate with new owners."
+      },
+      "l2": {
+        "description": "When a Weaver dies, part of their consciousness lingers in any artifact they created. These fragments can communicate with new owners."
+      },
+      "l3": {}
+    },
+    "group_id": "",
+    "created_at": 1782680441.0720797,
+    "updated_at": 1782680441.0720797
+  }
+]

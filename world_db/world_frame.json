@@ -1,0 +1,64 @@
+{
+  "world_name": "Aethra — The Shattered Sky",
+  "calendar_era": {
+    "name": "The Age of Fractures",
+    "year": 847,
+    "description": "847 years since the Sky Shattered. Three moons now hang where one once ruled. Magic leaks through the cracks in reality."
+  },
+  "magic_system": {
+    "name": "Resonance Weaving",
+    "description": "Magic is the art of vibrating reality at specific frequencies. Weavers attune to one of five Resonances: Stone, Flame, Wind, Tide, or Void. Each Resonance grants unique abilities but exacts a physical toll. Void Weavers are hunted — their power comes from the cracks in the sky itself.",
+    "rules": [
+      "Every spell costs body heat — overcasting causes frostburn",
+      "Void Resonance is forbidden in all Seven Kingdoms",
+      "Twin Resonances are possible but cause schizophrenic episodes",
+      "Resonance artifacts retain a fragment of their creator's soul"
+    ]
+  },
+  "races": [
+    {"name": "Humans", "description": "Dominant race of the Seven Kingdoms. Short-lived but adaptable. Produce the most Weavers.", "traits": ["adaptable", "ambitious", "short-lived"]},
+    {"name": "Aetherkin", "description": "Tall, pale beings born with natural Void Resonance. Their skin shimmers with trapped starlight. Hunted by the Inquisition.", "traits": ["void-touched", "long-lived", "nocturnal"]},
+    {"name": "Stoneforged", "description": "Sentient constructs of living crystal and ore. Do not sleep, eat, or age. Created by the First Weavers as guardians.", "traits": ["immortal", "logical", "heavy"]},
+    {"name": "Thornfolk", "description": "Small plant-humanoids from the Verdant Depths. Photosynthetic. Speak through rustling leaves and pheromones.", "traits": ["photosynthetic", "empathic", "small"]}
+  ],
+  "factions": [
+    {"name": "The Weavers' Conclave", "description": "Governing body of sanctioned magic. Train and license all non-Void Weavers. Answer to the Seven Crowns.", "alignment": "lawful neutral"},
+    {"name": "The Void Ascendancy", "description": "Secret society of Void Weavers. Believe the Sky Shattering was liberation, not catastrophe. Seek to widen the cracks.", "alignment": "chaotic neutral"},
+    {"name": "The Inquisition of Pure Light", "description": "Religious order that hunts Void-touched beings and Void Weavers. Fanatical. Burn first, ask never.", "alignment": "lawful evil"},
+    {"name": "The Gearmonger Consortium", "description": "Guild of artificers and Stoneforged. Build Resonance-powered machines. Control trade routes between kingdoms.", "alignment": "true neutral"},
+    {"name": "The Thornwardens", "description": "Thornfolk guardians of the Verdant Depths. Protect ancient forests from industrial expansion. Masters of biomancy.", "alignment": "neutral good"}
+  ],
+  "characters": [
+    {"name": "Kaelen Ashvale", "race": "Human", "role": "Protagonist", "description": "Young Weaver who accidentally attuned to Void Resonance. On the run from the Inquisition. Carries his mother's Resonance blade — it hums only for him.", "traits": ["fearless", "reckless", "loyal"], "resonance": "Void/Twin"},
+    {"name": "Elara Moonshard", "race": "Aetherkin", "role": "Companion", "description": "Last daughter of a purged Aetherkin noble house. Found refuge in the Verdant Depths. Knows secrets about why the Sky Shattered.", "traits": ["mysterious", "gentle", "traumatized"], "resonance": "Void"},
+    {"name": "Inquisitor-General Valdris Korr", "race": "Human", "role": "Antagonist", "description": "Head of the Inquisition. Implacable. His family was killed by a Void Weaver during the Cataclysm of Thornfall. His hatred is absolute — but so is his code of honor.", "traits": ["ruthless", "honorable", "haunted"], "resonance": "Flame"},
+    {"name": "Gearmaster Thunk-7", "race": "Stoneforged", "role": "Ally", "description": "7th iteration of a Stoneforged artificer. Builds impossible machines. Speaks in binary and poetry. Remembers the world before the Shattering.", "traits": ["ancient", "eccentric", "kind"], "resonance": null},
+    {"name": "Sylva Thornheart", "race": "Thornfolk", "role": "Ally", "description": "Thornwarden leader. Communicates through vines and flowers. Fierce protector of the forest. Has an unusual fondness for Kaelen.", "traits": ["fierce", "nurturing", "suspicious-of-fire"]}
+  ],
+  "locations": [
+    {"name": "The Seven Kingdoms", "description": "Fractured continent of human realms, united only by fear of the Void. Each kingdom has a Resonance specialty.", "type": "continent"},
+    {"name": "Verdant Depths", "description": "Ancient forest where Thornfolk dwell. Trees so tall their canopies form a second ground level. Thornwarden territory.", "type": "forest"},
+    {"name": "The Sky-Cracks", "description": "Visible rifts in the sky where Void energy seeps through. Northern lights made of raw magic. Airships avoid them.", "type": "phenomenon"},
+    {"name": "Ironhold Citadel", "description": "Inquisition stronghold. Black iron spires. Prison for captured Void Weavers. Cells are lined with Nullstone — magic doesn't work inside.", "type": "fortress"},
+    {"name": "The Resonant Spire", "description": "Conclave headquarters. A tower that amplifies Resonance — Weavers train here to master their craft. The top floor touches a Sky-Crack.", "type": "tower"},
+    {"name": "Cogmarket", "description": "Underground bazaar beneath the neutral city of Brassgate. Gearmonger territory. Anything can be bought here — including Void artifacts.", "type": "city"}
+  ],
+  "items": [
+    {"name": "Mother's Resonance Blade", "description": "A sword that vibrates with trapped sound. When swung, it screams. Kaelen's inheritance. Attuned to his unique Twin Resonance.", "type": "weapon"},
+    {"name": "Nullstone Shackles", "description": "Handcuffs carved from anti-magic stone. Used by the Inquisition to transport captured Weavers.", "type": "tool"},
+    {"name": "Sky-Shard", "description": "Fragment of the original moon. Pulses with Void energy. Highly illegal. Sought by the Void Ascendancy.", "type": "artifact"},
+    {"name": "Gearmonger Pocket Engine", "description": "Thunk-7's masterpiece. A miniature perpetual motion machine powered by Resonance harmonics. Fits in a palm.", "type": "device"}
+  ],
+  "historical_events": [
+    {"name": "The Sky Shattering", "year": 0, "description": "The original moon exploded. No one knows why. The cracks released Void energy into the world, creating the first Weavers and the first Void-touched."},
+    {"name": "The Cataclysm of Thornfall", "year": 832, "description": "A Void Weaver destroyed the town of Thornfall, killing 3000 including Inquisitor-General Korr's family. This event sparked the Great Purge."},
+    {"name": "The Great Purge", "year": 833, "description": "Inquisition systematically hunted and executed Aetherkin across all Seven Kingdoms. 80% of Aetherkin population killed. Survivors went into hiding."},
+    {"name": "The Verdant Concord", "year": 840, "description": "Thornfolk and Stoneforged formed an alliance to protect the Verdant Depths from industrialization. First cross-species treaty in 400 years."}
+  ],
+  "world_rules": [
+    {"name": "Resonance Binding", "description": "Every Weaver is born with or develops one Resonance. Dual Resonance is possible but dangerous — causes mental instability. Void Resonance is illegal."},
+    {"name": "The Toll of Magic", "description": "Casting drains body heat. Overcasting causes frostburn, hypothermia, and death. Master Weavers learn to regulate their temperature through breathing techniques."},
+    {"name": "Nullstone", "description": "Anti-magic mineral. Suppresses all Resonance within a radius. Mined exclusively by the Inquisition. Used in prisons, shackles, and execution chambers."},
+    {"name": "Soul Fragments", "description": "When a Weaver dies, part of their consciousness lingers in any artifact they created. These fragments can communicate with new owners."}
+  ]
+}
