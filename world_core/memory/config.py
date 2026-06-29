@@ -39,7 +39,7 @@ class MemoryConfig:
     enable_llm_merge: bool = True  # use LLM to summarise larger clusters
 
     # Indexing
-    embedding_dim: int = 768
+    embedding_dim: int = 1024
     faiss_rebuild_fragmentation_threshold: float = 0.2  # soft delete fraction that triggers rebuild
 
 # Default configuration instance
