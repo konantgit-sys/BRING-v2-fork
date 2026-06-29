@@ -25,7 +25,8 @@ class SocialSimulator:
     def _get_graph(self) -> nx.Graph:
         """Get the active graph from the graph store."""
         if self.ctx.graph_store is not None:
-            return self.ctx.graph_store.get_active_graph().to_undirected()
+            g = self.ctx.graph_store.get_active_graph()
+            return g.to_undirected() if g is not None else nx.Graph()
         return nx.Graph()
 
     def _select_interaction_pair(self) -> Optional[Tuple[str, str]]:

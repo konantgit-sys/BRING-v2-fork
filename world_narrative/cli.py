@@ -74,6 +74,9 @@ def play(
         ctx = NarrativeContext(db_path)
         ctx.ensure_booted()
 
+        # Boot graph store (not called in __init__ for API contexts)
+        await ctx.graph_store.boot()
+
         # Start background services (LLM queue, director, memory optimizer)
         await ctx.start_background_services()
         console.print("[green]Background services started[/]")

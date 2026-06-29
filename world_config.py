@@ -52,8 +52,8 @@ WORLD_LLM_MODEL: str = os.getenv("WORLD_LLM_MODEL", "gpt-4o-mini")
 
 # Embedding model configuration
 WORLD_EMBEDDING_MODEL: str = os.getenv("WORLD_EMBEDDING_MODEL", "text-embedding-3-small")
-WORLD_EMBEDDING_BASE_URL: str = os.getenv("WORLD_EMBEDDING_BASE_URL", "")
-WORLD_EMBEDDING_API_KEY: str = os.getenv("WORLD_EMBEDDING_API_KEY", "")
+WORLD_EMBEDDING_BASE_URL: str = os.getenv("WORLD_EMBEDDING_BASE_URL", "") or os.getenv("WORLD_LLM_BASE_URL", "")
+WORLD_EMBEDDING_API_KEY: str = os.getenv("WORLD_EMBEDDING_API_KEY", "") or os.getenv("WORLD_LLM_API_KEY", "")
 
 # LLM behavior settings
 WORLD_LLM_TIMEOUT: float = float(os.getenv("WORLD_LLM_TIMEOUT", "120.0"))

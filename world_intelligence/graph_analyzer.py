@@ -10,7 +10,7 @@ console = Console()
 class GraphAnalyzer:
     def __init__(self, store: GraphStore):
         self.store = store
-        self.G = store.get_active_graph()
+        self.G = store.get_active_graph() or nx.DiGraph()
 
     def centrality_report(self, top_n: int = 10) -> Dict[str, Any]:
         """Compute degree, betweenness, and closeness centrality for all nodes."""
