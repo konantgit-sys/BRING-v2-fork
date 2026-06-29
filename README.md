@@ -1,5 +1,8 @@
 # 🌟 BRING v2 – Building Rich Interactive Narrative Games
 
+> **🔱 This is a fork by [@konantgit-sys](https://github.com/konantgit-sys).** Original by [Eva-E1/BRING](https://github.com/Eva-E1/BRING).  
+> See [commits](#-fork-improvements) for what's changed.
+
 **BRING v2** is a **production‑ready**, AI‑powered platform for building, exploring, and **living** in persistent fantasy worlds.  
 It combines generative world construction, graph‑based knowledge management, deterministic probability systems, intelligent narrative orchestration, and immersive roleplay – all driven by large language models (LLMs) and FAISS‑accelerated memory.
 
@@ -884,3 +887,66 @@ python test_integration.py
 
 **Enjoy building and living in your worlds with BRING v2!**  
 *May your stories be legendary.*
+
+
+---
+
+## 🔱 Fork Improvements (konantgit-sys/BRING-v2-fork)
+
+### Changes from original [Eva-E1/BRING](https://github.com/Eva-E1/BRING)
+
+| Phase | Commit | What |
+|-------|--------|------|
+| **0** Diagnostics | `4c589d1` | Full code audit: 3 bugs found, dependency versions pinned |
+| **1** FAISS Fix | `bdc29d1` | Removed dead code, added dimension guard (768-dim mismatch), L2 normalization fallbacks |
+| **2** Ollama Integration | `0bf828d` | Installed Ollama locally, added `nomic-embed-text` (768-dim) + `qwen2.5:0.5b` for embeddings and text generation |
+| **3** Recovery | `c6048a6` | Post-restart recovery: `init.sh` for Ollama auto-start, dependency reinstall |
+| **4** Mistral API | `2334dff` | Switched from local Ollama → cloud Mistral API. LLM: `mistral-small-latest`. Embeddings: `mistral-embed` (1024-dim). RAM: 5.2 GB / 8.0 GB stable |
+| **5** Bug Fixes | `1e4b80a` | Fixed Director crash (`NoneType.to_undirected`), graph boot missing in CLI, embedding URL fallback to LLM config |
+
+### Key Technical Decisions
+
+- **Removed Ollama from production** — local LLM caused pod instability at 8 GB RAM limit. Switched to Mistral API (free tier works for dev).
+- **Embeddings via Mistral** — 1024-dim vectors, OpenAI-compatible API. Fallback: if `WORLD_EMBEDDING_BASE_URL` is empty, uses `WORLD_LLM_BASE_URL`.
+- **Graph boot fix** — `GraphStore.boot()` was never called in CLI mode (only in API), causing `NoneType` crashes across Director, social simulation, and story engine.
+
+### Live Demo
+
+Running `python world_cli.py play` on our test world **Aethra — The Shattered Sky** (32 entities, 5 characters):
+
+```
+🎭 Aethra — The Shattered Sky
+📍 The Seven Kingdoms
+⏱️ 19:41 → 19:50 (world time advances)
+
+Narrator (via Mistral API):
+"The child's voice rises in a thin, urgent cry—'It's waking up!'—
+ as the bundle in her arms convulses violently. The cloth frays
+ at the edges, blackened threads unraveling like smoke..."
+```
+
+### Next Phases (Planned)
+- **Phase 6** — Interactive simulation: `/look`, `/talk` commands with NPCs
+- **Phase 7** — Redis pub/sub bridge to SkyRift multiplayer server
+- **Phase 8** — Cobalt dashboard for world management
+- **Phase 9** — Production deployment on dedicated VPS
+
+### Running
+
+```bash
+# Requires Python 3.10+, Mistral API key
+pip install -r requirements.txt
+
+# Set env vars (or create .env)
+export WORLD_LLM_BASE_URL="https://api.mistral.ai/v1"
+export WORLD_LLM_API_KEY="your-key"
+export WORLD_LLM_MODEL="mistral-small-latest"
+export WORLD_EMBEDDING_MODEL="mistral-embed"
+export WORLD_EMBEDDING_DIM="1024"
+
+# Build world
+python world_cli.py builder build --force
+
+# Play
+python world_cli.py play
+```
