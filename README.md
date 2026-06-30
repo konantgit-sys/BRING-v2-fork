@@ -1003,6 +1003,26 @@ python3 world_engine/test_bridge_subscriber.py
 - `world_narrative/cli.py` — `await engine.connect_bridge()` in play command
 - `world_engine/test_bridge_subscriber.py` — Real-time event viewer
 
+### ✅ Phase 8 — Cobalt Dashboard for World Management (2026-06-30)
+
+**Completed:**
+- FastAPI + D3.js dashboard on port 9901
+- Real-time SSE event feed from Redis bridge (`/api/events/stream`)
+- World statistics: 5 characters, 5 factions, 6 locations, 4 items, 4 races, 4 world rules
+- Interactive D3 force-directed world map (draggable, zoomable)
+- Entity table with type badges
+- Timeline viewer with filter by group
+- Redis connectivity monitor
+- Deploy-ready: `port.txt` + `start.sh` for auto-restart
+
+**Files:**
+- `sites/cobalt-dash/app.py` — FastAPI backend
+- `sites/cobalt-dash/index.html` — Dashboard frontend
+- `sites/cobalt-dash/port.txt` — `full:9901`
+- `sites/cobalt-dash/start.sh` — Auto-restart script
+
+**Running:** `http://localhost:9901` (ready for subdomain when user requests)
+
 ### Next Phases (Planned)
-- **Phase 8** — Cobalt dashboard for world management
 - **Phase 9** — Production deployment on dedicated VPS
+- **Future** — SkyRift MMO server integration (when separate server available)
