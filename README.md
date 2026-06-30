@@ -925,11 +925,6 @@ Narrator (via Mistral API):
  at the edges, blackened threads unraveling like smoke..."
 ```
 
-### Next Phases (Planned)
-- **Phase 6** — Interactive simulation: `/look`, `/talk` commands with NPCs
-- **Phase 7** — Redis pub/sub bridge to SkyRift multiplayer server
-- **Phase 8** — Cobalt dashboard for world management
-- **Phase 9** — Production deployment on dedicated VPS
 
 ### Running
 
@@ -950,3 +945,37 @@ python world_cli.py builder build --force
 # Play
 python world_cli.py play
 ```
+
+### ✅ Phase 6 — Interactive Simulation (2026-06-30)
+
+**Completed:**
+- `/look` — Rich atmospheric scene via LLM (Mistral small). Describes lighting, weather, sounds, smells, NPCs present, and story hooks. Falls back to static description if LLM unavailable.
+- `/search` — Searches current location for items, clues, hidden things. LLM generates findings consistent with world lore.
+- `/locations` — Lists all known locations in the world.
+- **NPC memory** — Conversations with NPCs are saved to WorldMemory. NPCs "remember" past interactions.
+
+**Code changes:**
+- `world_engine/prompt_builder.py` — Added `build_look_prompt()`, `build_search_prompt()`
+- `world_engine/roleplay_engine.py` — Added `_handle_look()`, `_handle_search()`, NPC memory storage in `_handle_dialogue()`, `/locations` command
+
+**Demo:**
+```
+> /look
+The predawn sky bleeds a bruised violet over the jagged spires of Ashvale's 
+obsidian citadel, their blackened stone etched with frost from last night's 
+storm—now receding into a pallid mist that curls between the battlements...
+
+> /search
+A tattered black cloak lies half-buried in the damp undergrowth, its fabric 
+embroidered with a silver sigil—a shattered crown cradling a dying ember. 
+Beneath it, a rusted dagger bears the same emblem...
+
+> talk to Elara Moonshard What do you know about the Inquisition?
+Elara Moonshard says: "The Inquisition fears what they cannot control. 
+But Arcanist Vex... he has something I need. Will you help me?"
+```
+
+### Next Phases (Planned)
+- **Phase 7** — Redis pub/sub bridge to SkyRift multiplayer server
+- **Phase 8** — Cobalt dashboard for world management
+- **Phase 9** — Production deployment on dedicated VPS

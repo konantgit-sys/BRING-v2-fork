@@ -81,6 +81,90 @@ Return only the dialogue line, no extra description.
 """
 
     @staticmethod
+    def build_look_prompt(
+        world_name: str,
+        current_time: str,
+        location: str,
+        location_desc: str,
+        character: str,
+        nearby_npcs: List[str],
+        recent_events: List[str],
+        world_rules: List[str],
+        time_of_day: str = "",
+    ) -> str:
+        """Prompt for rich atmospheric scene description when player looks around."""
+        npcs = "\n".join(f"- {n}" for n in nearby_npcs) if nearby_npcs else "No one else is here."
+        events = "\n".join(f"- {e}" for e in recent_events[-5:]) if recent_events else "Nothing in particular."
+        rules = "\n".join(f"- {r}" for r in world_rules[:5]) if world_rules else "Standard fantasy world rules."
+        tod = f" Time of day: {time_of_day}." if time_of_day else ""
+
+        return f"""You are the narrator for the world "{world_name}".
+
+Time: {current_time}.{tod}
+Location: {location}
+Known description: {location_desc}
+Player character: {character or "an adventurer"}
+
+NPCs present here:
+{npcs}
+
+Recent events:
+{events}
+
+World rules:
+{rules}
+
+The player looks around, taking in their surroundings. Describe the scene in rich, atmospheric prose (3-5 sentences). Include:
+- Visual details: lighting, weather, architecture, colors
+- Sounds and smells
+- Mood and atmosphere
+- What the nearby NPCs are doing (if any)
+- Any subtle details that hint at story possibilities
+
+Do NOT speak or act for the player's character. Describe only what they see, hear, and feel.
+Output only the narrative text, no headers or commentary."""
+
+    @staticmethod
+    def build_search_prompt(
+        world_name: str,
+        current_time: str,
+        location: str,
+        location_desc: str,
+        character: str,
+        previous_searches: List[str],
+        world_rules: List[str],
+    ) -> str:
+        """Prompt for search action — player searches the current location."""
+        prev = "\n".join(f"- {s}" for s in previous_searches[-3:]) if previous_searches else "First time searching here."
+        rules = "\n".join(f"- {r}" for r in world_rules[:3]) if world_rules else "Standard fantasy world."
+
+        return f"""You are the narrator for the world "{world_name}".
+
+Time: {current_time}
+Location: {location}
+Known description: {location_desc}
+Player character: {character or "an adventurer"}
+
+Previous searches at this location:
+{prev}
+
+World rules:
+{rules}
+
+The player carefully searches the area, looking for items, clues, hidden things, or anything of interest.
+
+Generate 1-3 interesting findings consistent with this location and world. They could be:
+- An item (coin, key, potion, letter, weapon part, trinket)
+- A clue (footprint, hidden passage, symbol carved in stone, torn fabric)
+- An observation (someone watching, a sound from behind a wall, a strange smell)
+- An environmental detail (loose floorboard, false wall, buried chest)
+
+Be creative but grounded in the world. Items should be useful or story-relevant, not junk.
+Output a short narrative (2-5 sentences) describing what the character finds.
+Do NOT act for the player's character. Only describe what is found.
+Output only the narrative text, nothing else."""
+
+    @staticmethod
     def build_scene_transition_prompt(
         current_location: str,
         destination: str,

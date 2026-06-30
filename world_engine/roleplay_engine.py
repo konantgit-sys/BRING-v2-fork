@@ -8,6 +8,7 @@ from typing import Optional, Dict, Any, List, TYPE_CHECKING
 
 from world_builder.graph_manager import GraphManager
 from world_core.llm_queue import GlobalLLMQueue
+from world_director.models import TaskPriority
 from world_explorer.store import GraphStore
 from world_narrative.memory_optimized import OptimizedMemoryStore
 from world_narrative.chronicler import Chronicler
@@ -30,6 +31,7 @@ from .agents.npc_agent import NPCAgent
 from .agents.scene_agent import SceneAgent
 from .agents.director_agent import DirectorAgent
 from .start_resolver import StartResolver
+from .prompt_builder import PromptBuilder
 
 logger = logging.getLogger(__name__)
 
@@ -332,6 +334,30 @@ class RoleplayEngine:
             group="dialogue",
         )
 
+        # Save conversation to NPC memory for persistent recall
+        if self.world_memory is not None and npc_node:
+            try:
+                from uuid import uuid4
+                from world_core.memory.world_memory import WorldMemoryEntry
+                entry = WorldMemoryEntry(
+                    id=str(uuid4()),
+                    content=(
+                        f"Talked with {self.active_character or 'a stranger'}: "
+                        f"they said '{player_line}', I responded '{response}'"
+                    ),
+                    timestamp=self.current_time,
+                    source_type="npc",
+                    source_id=npc_name,
+                    importance=0.4,
+                    tags=["dialogue", "conversation"],
+                    entity_uid=npc_node.uid,
+                    memory_type="episodic",
+                )
+                await self.world_memory.add_memory(entry)
+            except Exception as e:
+                logger.warning(f"Failed to save NPC memory: {e}")
+
+        self.current_time += timedelta(minutes=2)
         return f'{npc_name} says: "{response}"'
 
     async def _handle_generic_action(self, user_input: str) -> str:
@@ -402,20 +428,120 @@ class RoleplayEngine:
         self.current_time += timedelta(minutes=5)
         return narrative
 
+    async def _handle_look(self) -> str:
+        """Rich atmospheric scene description via NarratorAgent."""
+        loc_node = self.gm.store.get_by_name_and_type(
+            self.current_location, "Location"
+        )
+        location_desc = (
+            loc_node.profile.l2.get("description", "An unremarkable place.")
+            if loc_node else "An unknown place."
+        )
+
+        # Gather context
+        recent = await self.chronicler.get_timeline(
+            since=self.current_time - timedelta(hours=4), limit=10
+        )
+        recent_texts = [e["description"] for e in recent]
+        nearby_npcs = await self._get_nearby_npcs()
+
+        # Use PromptBuilder from the same package
+        prompt = PromptBuilder.build_look_prompt(
+            world_name=self.world_frame["world_name"],
+            current_time=self.current_time.isoformat(),
+            location=self.current_location,
+            location_desc=location_desc,
+            character=self.active_character or "an adventurer",
+            nearby_npcs=nearby_npcs,
+            recent_events=recent_texts,
+            world_rules=[r["description"] for r in self.world_frame.get("world_rules", [])],
+        )
+
+        try:
+            response = await self.llm_queue.generate_text(
+                prompt, priority=TaskPriority.HIGH, temperature=0.8
+            )
+            narrative = response.strip()
+        except Exception as e:
+            logger.warning(f"LLM look failed, fallback to static desc: {e}")
+            narrative = f"You look around. {location_desc}"
+
+        # Log the action
+        await self.chronicler.log_event(
+            f"{self.active_character or 'Player'} looked around {self.current_location}",
+            self.current_time,
+            group="perception",
+        )
+        self.current_time += timedelta(minutes=2)
+        return narrative
+
+    async def _handle_search(self) -> str:
+        """Search the current location for items, clues, hidden things."""
+        loc_node = self.gm.store.get_by_name_and_type(
+            self.current_location, "Location"
+        )
+        location_desc = (
+            loc_node.profile.l2.get("description", "An unremarkable place.")
+            if loc_node else "An unknown place."
+        )
+
+        # Get previous searches at this location
+        previous = await self.chronicler.get_events_by_group(
+            group="search", limit=10
+        )
+        previous_texts = [
+            e["description"] for e in previous
+            if self.current_location.lower() in e["description"].lower()
+        ]
+
+        prompt = PromptBuilder.build_search_prompt(
+            world_name=self.world_frame["world_name"],
+            current_time=self.current_time.isoformat(),
+            location=self.current_location,
+            location_desc=location_desc,
+            character=self.active_character or "an adventurer",
+            previous_searches=previous_texts,
+            world_rules=[r["description"] for r in self.world_frame.get("world_rules", [])],
+        )
+
+        try:
+            response = await self.llm_queue.generate_text(
+                prompt, priority=TaskPriority.HIGH, temperature=0.7
+            )
+            narrative = response.strip()
+        except Exception as e:
+            logger.warning(f"LLM search failed: {e}")
+            narrative = "You search carefully but find nothing of interest."
+
+        # Log the search
+        await self.chronicler.log_event(
+            f"{self.active_character or 'Player'} searched {self.current_location}: {narrative[:200]}",
+            self.current_time,
+            group="search",
+        )
+        self.current_time += timedelta(minutes=5)
+        return narrative
+
     async def _handle_command(self, cmd: str) -> str:
         """Simple slash commands."""
         parts = cmd.split()
         verb = parts[0].lower()
         if verb == "help":
-            return "Commands: /look, /inventory, /status, /quests, /time, /save, /quit"
-        if verb == "look":
-            loc_node = self.gm.store.get_by_name_and_type(
-                self.current_location, "Location"
+            return (
+                "Commands: /look, /search, /locations, /inventory, /status, "
+                "/quests, /time, /save, /quit\n"
+                "Also: talk to NPC, go to Location, attack NPC, persuade NPC"
             )
-            if loc_node:
-                desc = loc_node.profile.l2.get("description", "You see nothing special.")
-                return f"You look around. {desc}"
-            return "You see nothing of note."
+        if verb == "look":
+            return await self._handle_look()
+        if verb == "search":
+            return await self._handle_search()
+        if verb == "locations":
+            locs = self.gm.store.list_by_type("Location")
+            if not locs:
+                return "No known locations."
+            lines = [f"• {loc.name}" for loc in locs if hasattr(loc, 'name')]
+            return "Known locations:\n" + "\n".join(lines) if lines else "No locations found."
         if verb == "inventory":
             if not self.active_character:
                 return "You are not controlling any character."
