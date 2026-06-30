@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cobalt Dashboard — BRING World Manager</title>
+<style>
+:root {
+    --bg: #0a0a14;
+    --surface: #12122a;
+    --border: #1e1e3a;
+    --text: #c8c8e0;
+    --accent: #6c5ce7;
+    --accent2: #00d4ff;
+    --danger: #ff6b6b;
+    --success: #51cf66;
+    --warn: #ffd43b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+/* Header */
+.header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top:0; z-index:100;
+}
+.header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+}
+.header h1 span { color: var(--accent); }
+.status-dot {
+    width:10px; height:10px; border-radius:50%;
+    display:inline-block; margin-right:6px;
+}
+.status-dot.online { background: var(--success); }
+.status-dot.offline { background: var(--danger); }
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 20px;
+}
+/* Cards */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+.stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.stat-item {
+    background: rgba(108,92,231,0.08);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+.stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+.stat-label {
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+th { color: var(--accent); font-weight: 500; font-size: 11px; text-transform: uppercase; }
+tr:hover td { background: rgba(108,92,231,0.04); }
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.badge.character { background: rgba(0,212,255,0.15); color: var(--accent2); }
+.badge.faction { background: rgba(108,92,231,0.2); color: var(--accent); }
+.badge.location { background: rgba(81,207,102,0.15); color: var(--success); }
+.badge.artifact { background: rgba(255,212,59,0.15); color: var(--warn); }
+.badge.event { background: rgba(255,107,107,0.15); color: var(--danger); }
+.badge.concept { background: rgba(255,255,255,0.1); color: #aaa; }
+/* Event Feed */
+.event-feed {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.event-feed::-webkit-scrollbar { width: 4px; }
+.event-feed::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.event-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+}
+.event-time { color: #666; margin-right: 8px; font-family: monospace; }
+.event-desc { color: #ccc; }
+.event-group {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 6px;
+    font-size: 10px;
+    margin-right: 6px;
+    font-weight: 600;
+}
+.event-group.user_input { background: rgba(0,212,255,0.1); color: var(--accent2); }
+.event-group.narrative { background: rgba(108,92,231,0.15); color: var(--accent); }
+.event-group.social { background: rgba(255,212,59,0.1); color: var(--warn); }
+.event-group.movement { background: rgba(81,207,102,0.1); color: var(--success); }
+.event-group.system { background: rgba(255,255,255,0.05); color: #888; }
+/* Live SSE */
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--success);
+}
+.live-pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.3; transform:scale(1.5); }
+}
+/* Map */
+#map-svg {
+    width: 100%;
+    height: 500px;
+    border-radius: 8px;
+}
+.node circle { stroke-width: 2px; }
+.legend {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin-top: 8px; font-size: 11px;
+}
+.legend span {
+    display: flex; align-items: center; gap: 4px;
+}
+.legend-dot {
+    width:8px; height:8px; border-radius:50%; display:inline-block;
+}
+/* Full width cards */
+.card-full { grid-column: 1 / -1; }
+/* Tabs */
+.tabs { display:flex; gap:4px; margin-bottom:12px; }
+.tab {
+    padding: 6px 14px; border-radius: 8px;
+    border: 1px solid var(--border); background: transparent;
+    color: #888; cursor: pointer; font-size: 12px;
+    transition: all 0.2s;
+}
+.tab:hover { border-color: var(--accent); color: #ccc; }
+.tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+/* Responsive */
+@media (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; padding: 12px; }
+    .header { padding: 12px 16px; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>⚡ <span id="world-name">Aethra</span> — Cobalt Dashboard</h1>
+    <div style="display:flex;align-items:center;gap:16px;">
+        <span id="redis-status">
+            <span class="status-dot" style="background:var(--danger)"></span> Redis
+        </span>
+        <span style="font-size:13px;color:#888;" id="game-time">—</span>
+    </div>
+</div>
+
+<div class="grid">
+    <!-- Stats -->
+    <div class="card">
+        <h2>📊 World Statistics</h2>
+        <div class="stat-row" id="stats-grid">
+            <div class="stat-item"><div class="stat-value" id="st-characters">—</div><div class="stat-label">Characters</div></div>
+            <div class="stat-item"><div class="stat-value" id="st-factions">—</div><div class="stat-label">Factions</div></div>
+            <div class="stat-item"><div class="stat-value" id="st-locations">—</div><div class="stat-label">Locations</div></div>
+            <div class="stat-item"><div class="stat-value" id="st-items">—</div><div class="stat-label">Items</div></div>
+            <div class="stat-item"><div class="stat-value" id="st-events">—</div><div class="stat-label">Events</div></div>
+            <div class="stat-item"><div class="stat-value" id="st-races">—</div><div class="stat-label">Races</div></div>
+        </div>
+    </div>
+
+    <!-- Live Feed -->
+    <div class="card">
+        <h2>🔴 Live Feed <span class="live-indicator" id="live-status"><span class="live-pulse"></span> Connected</span></h2>
+        <div class="event-feed" id="live-feed">
+            <div style="color:#666;font-size:12px;">Waiting for events…</div>
+        </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="card card-full">
+        <h2>📜 Timeline</h2>
+        <div class="tabs">
+            <button class="tab active" onclick="loadTimeline()">All</button>
+            <button class="tab" onclick="loadTimeline('narrative')">Narrative</button>
+            <button class="tab" onclick="loadTimeline('social')">Social</button>
+            <button class="tab" onclick="loadTimeline('user_input')">User Input</button>
+            <button class="tab" onclick="loadTimeline('movement')">Movement</button>
+        </div>
+        <div class="event-feed" id="timeline-feed" style="max-height:600px;">
+            <div style="color:#666;">Loading…</div>
+        </div>
+    </div>
+
+    <!-- Entities -->
+    <div class="card card-full">
+        <h2>🌍 All Entities</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>Type</th><th>Name</th><th>Location</th><th>Description</th></tr>
+                </thead>
+                <tbody id="entities-tbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- World Map (graph) -->
+    <div class="card card-full">
+        <h2>🗺️ World Map</h2>
+        <svg id="map-svg"></svg>
+        <div class="legend">
+            <span><span class="legend-dot" style="background:var(--accent2)"></span> Characters</span>
+            <span><span class="legend-dot" style="background:var(--success)"></span> Locations</span>
+            <span><span class="legend-dot" style="background:var(--accent)"></span> Factions</span>
+            <span><span class="legend-dot" style="background:var(--warn)"></span> Artifacts</span>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script>
+// ──────────────────────── API ────────────────────────
+const API = '/api';
+
+async function fetchJSON(path) {
+    try {
+        const r = await fetch(API + path);
+        return await r.json();
+    } catch(e) {
+        console.error('Fetch error:', path, e);
+        return null;
+    }
+}
+
+// ──────────────────────── Stats ────────────────────────
+async function loadStats() {
+    const data = await fetchJSON('/stats');
+    if (!data) return;
+    document.getElementById('world-name').textContent = data.world_name;
+    document.getElementById('game-time').textContent = new Date(data.game_time).toLocaleString();
+    document.getElementById('st-characters').textContent = data.characters;
+    document.getElementById('st-factions').textContent = data.factions;
+    document.getElementById('st-locations').textContent = data.locations;
+    document.getElementById('st-items').textContent = data.items;
+    document.getElementById('st-events').textContent = data.events;
+    document.getElementById('st-races').textContent = data.races;
+}
+
+// ──────────────────────── Entities ────────────────────────
+async function loadEntities() {
+    const data = await fetchJSON('/entities');
+    if (!data) return;
+    const tbody = document.getElementById('entities-tbody');
+    const typeBadges = {
+        Character: 'character', Faction: 'faction', Location: 'location',
+        Item: 'artifact', Event: 'event', Race: 'concept', WorldRule: 'concept'
+    };
+    
+    tbody.innerHTML = data.entities.map(e => {
+        const badge = typeBadges[e.type] || 'concept';
+        return `<tr>
+            <td><span class="badge ${badge}">${e.type}</span></td>
+            <td style="font-weight:500;color:#fff;">${e.name}</td>
+            <td style="color:#888;">${e.location}</td>
+            <td style="max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e.description}</td>
+        </tr>`;
+    }).join('');
+}
+
+// ──────────────────────── Timeline ────────────────────────
+async function loadTimeline(group) {
+    let url = '/timeline?limit=200';
+    if (group) url += '&group=' + group;
+    
+    // Update active tab
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    const data = await fetchJSON(url);
+    if (!data) return;
+    
+    const feed = document.getElementById('timeline-feed');
+    feed.innerHTML = data.events.slice().reverse().map(e => {
+        const t = new Date(e.timestamp).toLocaleTimeString();
+        const grp = e.group || 'unknown';
+        return `<div class="event-item">
+            <span class="event-time">${t}</span>
+            <span class="event-group ${grp}">${grp}</span>
+            <span class="event-desc">${e.description}</span>
+        </div>`;
+    }).join('');
+}
+
+// ──────────────────────── Redis Status ────────────────────────
+async function checkRedis() {
+    const data = await fetchJSON('/redis-status');
+    const status = document.getElementById('redis-status');
+    if (data && data.connected) {
+        status.innerHTML = '<span class="status-dot online"></span> Redis';
+    } else {
+        status.innerHTML = '<span class="status-dot offline"></span> Redis';
+    }
+}
+
+// ──────────────────────── SSE Live Feed ────────────────────────
+function connectSSE() {
+    const es = new EventSource(API + '/events/stream');
+    const feed = document.getElementById('live-feed');
+    const liveStatus = document.getElementById('live-status');
+    let firstEvent = true;
+    
+    es.onmessage = function(e) {
+        if (firstEvent) { feed.innerHTML = ''; firstEvent = false; }
+        
+        try {
+            const msg = JSON.parse(e.data);
+            if (msg.type === 'connected') {
+                liveStatus.innerHTML = '<span class="live-pulse"></span> Connected';
+                return;
+            }
+            if (msg.type === 'error' || msg.type === 'disconnected') {
+                liveStatus.innerHTML = '⚠️ Disconnected';
+                return;
+            }
+            
+            const event = msg.event;
+            if (!event) return;
+            
+            const t = new Date(event.timestamp).toLocaleTimeString();
+            const evtType = event.type || '?';
+            const channel = msg.channel || '';
+            
+            let desc = '';
+            if (evtType === 'scene_enter') {
+                desc = `${event.character} entered ${event.location}`;
+            } else if (evtType === 'scene_exit') {
+                desc = `${event.character} left ${event.from} → ${event.to}`;
+            } else if (evtType === 'npc_spoke') {
+                desc = `${event.npc_name}: "${event.message?.substring(0,80)}"`;
+            } else if (evtType === 'story_beat') {
+                desc = event.description?.substring(0,100) || 'Story beat triggered';
+            } else {
+                desc = JSON.stringify(event).substring(0,120);
+            }
+            
+            const item = document.createElement('div');
+            item.className = 'event-item';
+            item.innerHTML = `
+                <span class="event-time">${t}</span>
+                <span class="event-group" style="background:rgba(0,212,255,0.15);color:var(--accent2);">${evtType}</span>
+                <span class="event-desc">${desc}</span>
+            `;
+            feed.prepend(item);
+            
+            // Keep max 50 items
+            while (feed.children.length > 50) feed.lastChild.remove();
+        } catch(err) {
+            console.error('SSE parse:', err);
+        }
+    };
+    
+    es.onerror = function() {
+        liveStatus.innerHTML = '⚠️ Reconnecting…';
+    };
+}
+
+// ──────────────────────── World Map Graph ────────────────────────
+async function drawMap() {
+    const data = await fetchJSON('/entities');
+    if (!data || !data.entities) return;
+    
+    // Filter to characters + locations + factions
+    const nodes = data.entities
+        .filter(e => ['Character','Location','Faction','Item'].includes(e.type))
+        .map(e => ({
+            id: e.uid || e.name,
+            name: e.name,
+            type: e.type,
+            location: e.location
+        }));
+    
+    if (nodes.length < 2) return;
+    
+    // Build links: characters → their location, factions → related locations
+    const links = [];
+    const nodeMap = {};
+    nodes.forEach(n => nodeMap[n.name] = n);
+    
+    nodes.forEach(n => {
+        if (n.location && n.location !== '?' && n.location !== 'unknown') {
+            // Find the location node
+            const locNode = nodes.find(x => x.name === n.location);
+            if (locNode) {
+                links.push({ source: n.id, target: locNode.id, value: 1 });
+            } else {
+                // Create implicit location node
+                const newId = 'loc-' + n.location;
+                if (!nodeMap[newId]) {
+                    nodes.push({ id: newId, name: n.location, type: 'location', location: '' });
+                    nodeMap[newId] = { id: newId, name: n.location, type: 'location' };
+                }
+                links.push({ source: n.id, target: newId, value: 1 });
+            }
+        }
+    });
+    
+    const svg = d3.select('#map-svg');
+    svg.selectAll('*').remove();
+    
+    const width = svg.node().getBoundingClientRect().width;
+    const height = 500;
+    svg.attr('viewBox', `0 0 ${width} ${height}`);
+    
+    const colors = {
+        Character: '#00d4ff',
+        Location: '#51cf66',
+        Faction: '#6c5ce7',
+        Item: '#ffd43b'
+    };
+    
+    const sim = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links).id(d => d.id).distance(80))
+        .force('charge', d3.forceManyBody().strength(-200))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('collision', d3.forceCollide().radius(25));
+    
+    const g = svg.append('g');
+    
+    const link = g.selectAll('line')
+        .data(links)
+        .enter().append('line')
+        .attr('stroke', '#1e1e3a')
+        .attr('stroke-width', 1)
+        .attr('stroke-opacity', 0.5);
+    
+    const node = g.selectAll('g')
+        .data(nodes)
+        .enter().append('g')
+        .call(d3.drag()
+            .on('start', (e,d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+            .on('drag', (e,d) => { d.fx = e.x; d.fy = e.y; })
+            .on('end', (e,d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; })
+        );
+    
+    node.append('circle')
+        .attr('r', d => d.type === 'location' ? 12 : d.type === 'faction' ? 10 : 7)
+        .attr('fill', d => colors[d.type] || '#888')
+        .attr('stroke', d => d3.color(colors[d.type] || '#888').darker(0.3))
+        .attr('stroke-width', 2)
+        .attr('opacity', 0.85);
+    
+    node.append('text')
+        .text(d => d.name.length > 22 ? d.name.substring(0,20) + '…' : d.name)
+        .attr('dx', 12)
+        .attr('dy', 4)
+        .attr('font-size', '10px')
+        .attr('fill', '#ccc')
+        .attr('font-family', 'Inter, system-ui, sans-serif');
+    
+    // Zoom
+    svg.call(d3.zoom()
+        .extent([[0,0],[width,height]])
+        .scaleExtent([0.3, 3])
+        .on('zoom', (e) => { g.attr('transform', e.transform); })
+    );
+    
+    sim.on('tick', () => {
+        link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+            .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+        node.attr('transform', d => `translate(${d.x},${d.y})`);
+    });
+}
+
+// ──────────────────────── Init ────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    loadStats();
+    loadEntities();
+    loadTimeline();
+    checkRedis();
+    connectSSE();
+    
+    // Draw map after entities load
+    setTimeout(drawMap, 500);
+    
+    // Refresh stats every 30s
+    setInterval(loadStats, 30000);
+    setInterval(checkRedis, 15000);
+});
+</script>
+</body>
+</html>

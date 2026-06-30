@@ -1,5 +1,11 @@
 # 🌟 BRING v2 – Building Rich Interactive Narrative Games
 
+[![Fork](https://img.shields.io/badge/fork-konantgit--sys-blue)](https://github.com/konantgit-sys/BRING-v2-fork)
+[![Phases](https://img.shields.io/badge/phases-8%2F10%20complete-success)](#-fork-improvements)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
+[![World](https://img.shields.io/badge/world-Aethra%20%E2%80%94%20The%20Shattered%20Sky-purple)](#-the-world-aethra)
+[![Entities](https://img.shields.io/badge/entities-32-orange)](#-the-world-aethra)
+
 > **🔱 This is a fork by [@konantgit-sys](https://github.com/konantgit-sys).** Original by [Eva-E1/BRING](https://github.com/Eva-E1/BRING).  
 > See [commits](#-fork-improvements) for what's changed.
 
@@ -1016,13 +1022,21 @@ python3 world_engine/test_bridge_subscriber.py
 - Deploy-ready: `port.txt` + `start.sh` for auto-restart
 
 **Files:**
-- `sites/cobalt-dash/app.py` — FastAPI backend
-- `sites/cobalt-dash/index.html` — Dashboard frontend
-- `sites/cobalt-dash/port.txt` — `full:9901`
-- `sites/cobalt-dash/start.sh` — Auto-restart script
+- `cobalt_dashboard/app.py` — FastAPI backend
+- `cobalt_dashboard/index.html` — Dashboard frontend
+- `cobalt_dashboard/start.sh` — Auto-restart script
+
+**Documentation:**
+- `ARCHITECTURE.md` — Full system architecture with diagrams
 
 **Running:** `http://localhost:9901` (ready for subdomain when user requests)
 
 ### Next Phases (Planned)
 - **Phase 9** — Production deployment on dedicated VPS
 - **Future** — SkyRift MMO server integration (when separate server available)
+
+---
+
+## 📐 Architecture
+
+See **[ARCHITECTURE.md](ARCHITECTURE.md)** for the full system diagram, component descriptions, data flow, and Redis event channels.
