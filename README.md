@@ -975,7 +975,34 @@ Elara Moonshard says: "The Inquisition fears what they cannot control.
 But Arcanist Vex... he has something I need. Will you help me?"
 ```
 
+### ✅ Phase 7 — Redis Bridge for External Subscribers (2026-06-30)
+
+**Completed:**
+- Redis pub/sub bridge between BRING world engine and external services
+- Bridge publishes events to Redis channels (`bring:*`)
+- Event types: `scene:enter`, `scene:exit`, `npc:spoke`, `npc:moved`, `npc:action`, `story:beat`, `world:pulse`
+- Non-blocking via `redis.asyncio` — zero overhead on gameplay
+- Graceful fallback when Redis unavailable (BridgeStub no-op)
+- Test subscriber included: `world_engine/test_bridge_subscriber.py`
+
+**How it works:**
+```
+BRING Engine → RedisBridge → Redis pub/sub → SkyRift MMO
+                                           → Cobalt Dashboard
+                                           → Any subscriber
+```
+
+**Running the test subscriber:**
+```bash
+python3 world_engine/test_bridge_subscriber.py
+```
+
+**Code changes:**
+- `world_engine/redis_bridge.py` — RedisBridge + BridgeStub + factory
+- `world_engine/roleplay_engine.py` — Bridge integration (dialogue, scene transitions, story beats)
+- `world_narrative/cli.py` — `await engine.connect_bridge()` in play command
+- `world_engine/test_bridge_subscriber.py` — Real-time event viewer
+
 ### Next Phases (Planned)
-- **Phase 7** — Redis pub/sub bridge to SkyRift multiplayer server
 - **Phase 8** — Cobalt dashboard for world management
 - **Phase 9** — Production deployment on dedicated VPS

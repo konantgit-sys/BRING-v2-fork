@@ -90,6 +90,9 @@ def play(
         # Create the roleplay engine
         engine = ctx.create_roleplay_engine(character, resolved_location)
 
+        # Connect Redis bridge (no-op if Redis unavailable)
+        await engine.connect_bridge()
+
         # Handle starting point specification
         if start:
             resolver = engine.start_resolver

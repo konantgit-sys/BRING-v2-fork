@@ -32,6 +32,7 @@ from .agents.scene_agent import SceneAgent
 from .agents.director_agent import DirectorAgent
 from .start_resolver import StartResolver
 from .prompt_builder import PromptBuilder
+from .redis_bridge import create_bridge
 
 logger = logging.getLogger(__name__)
 
@@ -116,6 +117,17 @@ class RoleplayEngine:
 
         # Track visited locations for automatic subgraph expansion
         self.visited_locations: set = set()
+
+        # Redis bridge for external subscribers (SkyRift, dashboards, etc.)
+        self.bridge = create_bridge(world_id=world_frame.get("world_name", "bring"))
+
+    async def connect_bridge(self):
+        """Connect Redis bridge. Must be called after engine creation."""
+        await self.bridge.connect()
+        if self.bridge.connected:
+            logger.info(f"Redis bridge connected for world: {self.world_frame.get('world_name', 'bring')}")
+        else:
+            logger.info("Redis bridge not available — running without external pub/sub")
 
     def set_session(
         self,
@@ -234,8 +246,22 @@ class RoleplayEngine:
         )
 
         # Update state
+        old_location = self.current_location
         self.current_location = destination
         self.current_time += timedelta(minutes=10)
+
+        # Publish scene transition to Redis bridge
+        if self.bridge.connected:
+            await self.bridge.scene_exit(
+                character=self.active_character or "Player",
+                from_location=old_location,
+                to_location=destination,
+            )
+            await self.bridge.scene_enter(
+                character=self.active_character or "Player",
+                location=self.current_location,
+                description=description,
+            )
 
         # Log the movement
         await self.chronicler.log_event(
@@ -358,6 +384,17 @@ class RoleplayEngine:
                 logger.warning(f"Failed to save NPC memory: {e}")
 
         self.current_time += timedelta(minutes=2)
+
+        # Publish to Redis bridge for external subscribers
+        if self.bridge.connected:
+            await self.bridge.npc_spoke(
+                npc_name=npc_name,
+                npc_uid=npc_node.uid,
+                location=self.current_location,
+                message=response,
+                player=self.active_character or "Player",
+            )
+
         return f'{npc_name} says: "{response}"'
 
     async def _handle_generic_action(self, user_input: str) -> str:
@@ -402,6 +439,14 @@ class RoleplayEngine:
             beat = pending[0]
             narrative = await self.director_agent.inject_beat(beat["description"], narrative)
             await self.director.story_planner.mark_beat_done(beat["id"])
+
+            # Publish story beat to Redis bridge
+            if self.bridge.connected:
+                await self.bridge.story_beat(
+                    beat_id=beat.get("id", "unknown"),
+                    description=beat.get("description", ""),
+                    location=self.current_location,
+                )
 
         # Log user action and resulting narrative
         await self.chronicler.log_event(
